@@ -1,7 +1,7 @@
 # Mediotec - Sistema de Gerenciamento Escolar
 
 ## Versão: 1.0.0  
-**Autor**: Amalia Nascimento  
+**Autor**: Amalia Nascimento ,Amanda,  Abraão , Luiz , Luana, Guilherme 
 
 ## Descrição
 
