@@ -1,0 +1,18 @@
+{
+  "name": "mediotec",
+  "version": "1.0.0",
+  "description": "Sistema de gerenciamento escolar",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amalia Nascimento",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^5.19.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.1",
+    "uuid": "^10.0.0"
+  }
+}

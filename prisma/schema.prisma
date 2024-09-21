@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId       String      @id @default(uuid())
+  name         String      @db.VarChar(50)
+  cpf          String      @unique @db.VarChar(11)
+  email        String      @unique @db.VarChar(50)
+  password     String      @db.VarChar(50)
+  phone        String      @unique @db.VarChar(20)
+  role         Role
+  image        String?
+  familyContact String?     @db.VarChar(20)
+  affiliation  String?      @db.VarChar(20)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  
+  // Relações
+  classes      UserClass[]  
+  courses      UserCourse[] 
+  conceitos    Conceito[]
+}
+
+model Class {
+  classId      String       @id @default(uuid())
+  className    String       @db.VarChar(50)
+  year         DateTime     @db.Date
+  type         TypeOfClass
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relações
+  courses      ClassCourse[] 
+  users        UserClass[]    
+  conceitos    Conceito[]
+}
+
+model Course {
+  courseId     String       @id @default(uuid())
+  description  String       @db.VarChar(200)
+  workload     Int          @db.Int
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relações
+  classes      ClassCourse[] 
+  users        UserCourse[]  
+  conceitos    Conceito[]
+}
+
+model Conceito {
+  conceitoId   String     @id @default(uuid())
+  conceito     Conceitos
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Chaves estrangeiras
+  classId      String
+  courseId     String
+  userId       String
+  
+  // Relações
+  class        Class      @relation(fields: [classId], references: [classId])
+  course       Course     @relation(fields: [courseId], references: [courseId])
+  user         User       @relation(fields: [userId], references: [userId])
+}
+
+model ClassCourse {
+  
+  classId      String
+  courseId     String
+
+  // Relações
+  class        Class      @relation(fields: [classId], references: [classId])
+  course       Course     @relation(fields: [courseId], references: [courseId])
+  @@id([classId, courseId])
+}
+
+model UserClass {
+ 
+  userId       String
+  classId      String
+
+  // Relações
+  user         User       @relation(fields: [userId], references: [userId])
+  class        Class      @relation(fields: [classId], references: [classId])
+  @@id([userId,classId])
+}
+
+model UserCourse {
+ 
+  userId       String
+  courseId     String
+
+  // Relações
+  user         User       @relation(fields: [userId], references: [userId])
+  course       Course     @relation(fields: [courseId], references: [courseId])
+  @@id([userId, courseId])
+}
+
+enum Conceitos {
+  A
+  PA 
+  NA 
+}
+
+enum TypeOfClass {
+  A
+  B 
+  C 
+  D
+}
+
+enum Role {
+  COORDINATOR
+  TEACHER
+  STUDENT
+}
