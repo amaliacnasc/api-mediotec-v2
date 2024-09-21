@@ -6,7 +6,7 @@ router.post('/', User.createUser);
 router.get('/', User.getAllUsers); 
 router.get('/:id', User.getUserById);
 router.get('/name/:name', User.getUserByName); 
-router.get('/:role', User.getUsersByType); 
+router.get('/role/:role', User.getUsersByType); 
 router.put('/:id', User.updateUserById); 
 router.delete('/:id', User.updateUserById); 
 
