@@ -45,20 +45,20 @@ exports.getCourseById = async(req,res)=>{
 }
 
 // Buscar disciplina pelo nome
+// fazer tratamento de string to lower pra ele aceitar maiusculo e minusculo
 exports.getCourseByName = async(req,res)=>{
     try{
-        const course = await prisma.course.findUnique({
-            where:{courseName: req.params.name}
+        const disciplina = await prisma.course.findMany({
+            where:{courseName:req.params.courseSName}
         }); 
-        if(!course){
-            res.status(404).json({message:'Disciplina não encontrada'} );
+        if(!disciplina){
+            res.status(404).json({message: 'Disciplina não encontrada'});
         }
-        res.status(200).json(course); 
+        res.json(disciplina);
     }catch(error){
-        res.status(500).json({message:error.message});
+        res.status(500).json({message: error.message}); 
     }
 }
-
 
 // buscar todas as disciplinas de uma turma 
 exports.getCourseByClass = async (req, res) => {
@@ -142,7 +142,7 @@ exports.deleteCourseById = async(req,res)=>{
         if(!course){
             return res.status(404).json({ message: "Turma não encontrada" });
         }
-        res.json({message: `Disciplina${course.courseName} deletada com sucesso`});
+        res.json({message: `Disciplina ${course.courseName} deletada com sucesso`});
     }catch(error){
         res.status(500).json({message:error.message});
     }

@@ -36,7 +36,7 @@ exports.getAllClasses = async(req,res)=>{
 exports.getClassById = async(req,res)=>{
     try{
         const turma = await prisma.class.findUnique({
-            where:{classId: req.params.classId}
+            where:{classId: req.params.id}
         })
         res.status(200).json(turma);
     }catch(error){
@@ -66,7 +66,7 @@ exports.updateClassById = async(req,res)=>{
 exports.deleteClassById = async(req,res)=>{
     try{
        const turma = await prisma.user.findUnique({
-            where:{classId:req.params.id}
+            where:{cl:req.params.id}
         });
         if(!turma){
             res.status(404).json({message: 'Turma não encontrada'}); 
@@ -77,14 +77,27 @@ exports.deleteClassById = async(req,res)=>{
     }
 }
 
-// buscar todas as turmas de um ano 
-exports.getClassesByYear = async(req,res)=>{
-    try{
+// Buscar todas as turmas de um ano 
+exports.getClassesByYear = async (req, res) => {
+    try {
+        // Convertendo o ano para um número inteiro
+        const year = parseInt(req.params.year);
+
+        // Verifica se o ano é um número válido
+        if (isNaN(year)) {
+            return res.status(400).json({ message: 'Year must be a valid number.' });
+        }
+
+
         const turmas = await prisma.class.findMany({
-            where:{year: req.params.year}
+            where: { year: year }
         });
-        res.status(200).json(turmas)
-    }catch(error){
-        res.status(500).json({message:error.message}); 
+
+        if (turmas.length === 0) {
+            return res.status(404).json({ message: 'Nenhuma turma foi encontrada neste ano.' });
+        }
+        res.status(200).json(turmas);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-}
+};

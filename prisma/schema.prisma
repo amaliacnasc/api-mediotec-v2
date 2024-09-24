@@ -37,7 +37,7 @@ model User {
 model Class {
   classId      String       @id @default(uuid())
   className    String       @db.VarChar(50)
-  year         DateTime     @db.Date
+  year         Int          @db.Int
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
