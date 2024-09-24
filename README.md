@@ -23,3 +23,48 @@ Certifique-se de ter os seguintes itens instalados:
 - parser: Biblioteca auxiliar para parsing de dados.
 - router: Gerenciamento de rotas.
 - uuid: Geração de identificadores únicos universais (UUID).
+
+
+# Documentação das Rotas
+
+## Usuários
+
+| Método | Rota                                 | Descrição                            |
+|--------|--------------------------------------|-------------------------------------|
+| POST   | `/mediotec/usuarios/`                | Cria um novo usuário                |
+| GET    | `/mediotec/usuarios/`                | Obtém todos os usuários             |
+| GET    | `/mediotec/usuarios/:id`             | Obtém um usuário por ID             |
+| GET    | `/mediotec/usuarios/name/:name`      | Obtém um usuário pelo nome          |
+| GET    | `/mediotec/usuarios/role/:role`      | Obtém usuários por tipo de papel    |
+| PUT    | `/mediotec/usuarios/:id`             | Atualiza um usuário por ID          |
+| DELETE | `/mediotec/usuarios/delete/:id`      | Deleta um usuário por ID            |
+
+---
+
+## Disciplinas
+
+| Método | Rota                                   | Descrição                            |
+|--------|----------------------------------------|-------------------------------------|
+| POST   | `/mediotec/disciplinas/`               | Cria uma nova disciplina             |
+| GET    | `/mediotec/disciplinas/`               | Obtém todas as disciplinas           |
+| GET    | `/mediotec/disciplinas/:id`            | Obtém uma disciplina por ID          |
+| GET    | `/mediotec/disciplinas/:courseName`    | Obtém uma disciplina pelo nome       |
+| GET    | `/mediotec/disciplinas/:courseClass`   | Obtém disciplinas por turma          |
+| GET    | `/mediotec/disciplinas/:userId`        | Obtém disciplinas por usuário        |
+| PUT    | `/mediotec/disciplinas/:id`            | Atualiza uma disciplina por ID       |
+| DELETE | `/mediotec/disciplinas/:id`            | Deleta uma disciplina por ID         |
+
+---
+
+## Turmas
+
+| Método | Rota                                | Descrição                            |
+|--------|-------------------------------------|-------------------------------------|
+| POST   | `/mediotec/turmas/turma`            | Cria uma nova turma                 |
+| GET    | `/mediotec/turmas/turmas`           | Obtém todas as turmas               |
+| GET    | `/mediotec/turmas/turma/:id`        | Obtém uma turma por ID              |
+| GET    | `/mediotec/turmas/turma/:year`      | Obtém turmas por ano               |
+| PUT    | `/mediotec/turmas/turma/:id`        | Atualiza uma turma por ID           |
+| DELETE | `/mediotec/turmas/turma/:id`        | Deleta uma turma por ID             |
+
+---
