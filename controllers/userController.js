@@ -22,7 +22,7 @@ exports.getAllUsers = async(req,res)=>{
         const users = await prisma.user.findMany()
         res.json(users);
     }catch(error){
-
+        res.status(400).json({error:error.message});
     }
 }
 // Buscar usuário pelo id
@@ -93,13 +93,13 @@ exports.updateUserById = async(req,res)=>{
 // DELETE 
 exports.deleteUserById = async(req,res)=>{
     try{
-        user = await prisma.user.findUnique({
+       const user = await prisma.user.findUnique({
             where:{userId:req.params.id}
         });
         if(!user){
             res.status(404).json({message: 'Usuário não encontrado'}); 
         }
-        res.json({message: `Usuário${userId} deletado com sucesso`})
+        res.json({message: `Usuário${user.name} deletado com sucesso`})
     }catch(error){
         res.status(500).json({ error: error.message });
     }

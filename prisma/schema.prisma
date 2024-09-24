@@ -49,6 +49,7 @@ model Class {
 
 model Course {
   courseId     String       @id @default(uuid())
+  courseName   String       @db.VarChar(50)
   description  String       @db.VarChar(200)
   workload     Int          @db.Int
   createdAt    DateTime     @default(now())
