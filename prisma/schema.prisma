@@ -12,25 +12,26 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
 model User {
-  userId       String      @id @default(uuid())
-  name         String      @db.VarChar(50)
-  cpf          String      @unique @db.VarChar(11)
-  email        String      @unique @db.VarChar(50)
-  password     String      @db.VarChar(50)
-  phone        String      @unique @db.VarChar(20)
+  userId       String          @id @default(uuid())
+  name         String          @db.VarChar(50)
+  cpf          String          @unique @db.VarChar(11)
+  email        String          @unique @db.VarChar(50)
+  password     String          @db.VarChar(50)
+  phone        String          @unique @db.VarChar(20)
   role         Role
   image        String?
-  familyContact String?     @db.VarChar(20)
-  affiliation  String?      @db.VarChar(20)
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  
+  familyContact String?         @db.VarChar(20)
+  affiliation  String?          @db.VarChar(20)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
   // Relações
-  classes      UserClass[]  
-  courses      UserCourse[] 
+  classes      UserClass[]
+  courses      UserCourse[]
   conceitos    Conceito[]
+  announcementsCreated Announcements[] @relation(name: "AnnouncementAuthor")
+  announcementsReceived Announcements[] @relation(name: "AnnouncementReceiver")
 }
 
 model Class {
@@ -82,7 +83,8 @@ model ClassCourse {
   
   classId      String
   courseId     String
-
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   // Relações
   class        Class      @relation(fields: [classId], references: [classId])
   course       Course     @relation(fields: [courseId], references: [courseId])
@@ -90,7 +92,8 @@ model ClassCourse {
 }
 
 model UserClass {
- 
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   userId       String
   classId      String
 
@@ -101,7 +104,8 @@ model UserClass {
 }
 
 model UserCourse {
- 
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   userId       String
   courseId     String
 
@@ -110,7 +114,20 @@ model UserCourse {
   course       Course     @relation(fields: [courseId], references: [courseId])
   @@id([userId, courseId])
 }
+model Announcements {
+  announcementId  String   @id @default(uuid())
+  title           String   @db.VarChar(50)
+  content         String   @db.VarChar(500)
 
+  authorId        String
+  author          User     @relation(name: "AnnouncementAuthor", fields: [authorId], references: [userId])
+
+  receiverId      String
+  receiver        User     @relation(name: "AnnouncementReceiver", fields: [receiverId], references: [userId])
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
 enum Conceitos {
   A
   PA 
