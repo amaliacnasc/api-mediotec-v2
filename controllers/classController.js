@@ -5,10 +5,10 @@ const prisma = new PrismaClient();
 
 
 // buscar todas as turmas de um ano 
-// atualizar turma pelo id
-// deletar turma pelo id 
+
 
 //criar turma 
+// GET
 exports.createClass = async(req,res)=>{
     try{
         const turma = await prisma.class.create({
@@ -21,6 +21,7 @@ exports.createClass = async(req,res)=>{
 }
 
 // buscar todas as turmas
+// GET
 exports.getAllClasses = async(req,res)=>{
     try{
         const turmas = await prisma.class.findMany();
@@ -31,7 +32,7 @@ exports.getAllClasses = async(req,res)=>{
 }
 
 // Buscar turma pelo id 
-
+// GET
 exports.getClassById = async(req,res)=>{
     try{
         const turma = await prisma.class.findUnique({
@@ -44,18 +45,46 @@ exports.getClassById = async(req,res)=>{
 }
 
 // atualizar turma pelo id
+// PUT
 exports.updateClassById = async(req,res)=>{
     try{
-        const user = await prisma.class.update({
+        const turma = await prisma.class.update({
             where:{classId: req.params.id}, 
             data: req.body,
         }); 
         
-        if(!user){
+        if(!turma){
             res.status(404).json({message: 'Turma não encontrada'}); 
         }
-        res.json(user);
+        res.json(turma);
     }catch(error){
         res.status(500).json({ message: error.message });
     }
 }; 
+// Deletar turma pelo Id
+// DELETE 
+exports.deleteClassById = async(req,res)=>{
+    try{
+       const turma = await prisma.user.findUnique({
+            where:{classId:req.params.id}
+        });
+        if(!turma){
+            res.status(404).json({message: 'Turma não encontrada'}); 
+        }
+        res.json({message: `Turma${turma.name} deletada com sucesso`})
+    }catch(error){
+        res.status(500).json({ error: error.message });
+    }
+}
+
+// buscar todas as turmas de um ano 
+exports.getClassesByYear = async(req,res)=>{
+    try{
+        const turmas = await prisma.class.findMany({
+            where:{year: req.params.year}
+        });
+        res.status(200).json(turmas)
+    }catch(error){
+        res.status(500).json({message:error.message}); 
+    }
+}

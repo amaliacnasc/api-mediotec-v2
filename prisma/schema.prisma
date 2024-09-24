@@ -38,7 +38,6 @@ model Class {
   classId      String       @id @default(uuid())
   className    String       @db.VarChar(50)
   year         DateTime     @db.Date
-  type         TypeOfClass
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
@@ -132,13 +131,6 @@ enum Conceitos {
   A
   PA 
   NA 
-}
-
-enum TypeOfClass {
-  A
-  B 
-  C 
-  D
 }
 
 enum Role {
