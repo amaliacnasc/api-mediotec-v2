@@ -125,7 +125,7 @@ exports.updateCourseById = async(req,res)=>{
             where:{courseId: req.params.id}
         }); 
         if(!course){
-            return res.status(404).json({ message: "Turma não encontrada" });
+            return res.status(404).json({ message: "Disciplina não encontrada" });
         }
         res.json(course);
     }catch(error){
@@ -142,7 +142,7 @@ exports.deleteCourseById = async(req,res)=>{
         if(!course){
             return res.status(404).json({ message: "Turma não encontrada" });
         }
-        res.json({message: `Turma${course.courseName} deletada com sucesso`});
+        res.json({message: `Disciplina${course.courseName} deletada com sucesso`});
     }catch(error){
         res.status(500).json({message:error.message});
     }
