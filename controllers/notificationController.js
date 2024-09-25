@@ -64,3 +64,5 @@ exports.deleteNotificationById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+// Buscar todas as notificações de uma turma 
+// Buscar notificação pelo titulo 

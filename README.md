@@ -47,12 +47,12 @@ Certifique-se de ter os seguintes itens instalados:
 |--------|----------------------------------------|-------------------------------------|
 | POST   | `/mediotec/disciplinas/`               | Cria uma nova disciplina             |
 | GET    | `/mediotec/disciplinas/`               | Obtém todas as disciplinas           |
-| GET    | `/mediotec/disciplinas/:id`            | Obtém uma disciplina por ID          |
+| GET    | `/mediotec/disciplinas/course/:id      | Obtém uma disciplina por ID          |
 | GET    | `/mediotec/disciplinas/:courseName`    | Obtém uma disciplina pelo nome       |
 | GET    | `/mediotec/disciplinas/:courseClass`   | Obtém disciplinas por turma          |
 | GET    | `/mediotec/disciplinas/:userId`        | Obtém disciplinas por usuário        |
-| PUT    | `/mediotec/disciplinas/:id`            | Atualiza uma disciplina por ID       |
-| DELETE | `/mediotec/disciplinas/:id`            | Deleta uma disciplina por ID         |
+| PUT    | `/mediotec/disciplinas/courseupdate/:id`| Atualiza uma disciplina por ID       |
+| DELETE | `/mediotec/disciplinas/coursedelete/:id`| Deleta uma disciplina por ID         |
 
 ---
 
@@ -60,11 +60,11 @@ Certifique-se de ter os seguintes itens instalados:
 
 | Método | Rota                                | Descrição                            |
 |--------|-------------------------------------|-------------------------------------|
-| POST   | `/mediotec/turmas/turma`            | Cria uma nova turma                 |
-| GET    | `/mediotec/turmas/turmas`           | Obtém todas as turmas               |
-| GET    | `/mediotec/turmas/turma/:id`        | Obtém uma turma por ID              |
-| GET    | `/mediotec/turmas/turma/:year`      | Obtém turmas por ano               |
-| PUT    | `/mediotec/turmas/turma/:id`        | Atualiza uma turma por ID           |
-| DELETE | `/mediotec/turmas/turma/:id`        | Deleta uma turma por ID             |
+| POST   | `/mediotec/turmas/`                 | Cria uma nova turma                 |
+| GET    | `/mediotec/turmas/`                 | Obtém todas as turmas               |
+| GET    | `/mediotec/turmas/id/:id`           | Obtém uma turma por ID              |
+| GET    | `/mediotec/turmas/year/:year`       | Obtém turmas por ano               |
+| PUT    | `/mediotec/turmas/update/:id`       | Atualiza uma turma por ID           |
+| DELETE | `/mediotec/turmas/delete/:id`       | Deleta uma turma por ID             |
 
 ---
