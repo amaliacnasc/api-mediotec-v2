@@ -19,8 +19,10 @@ model User {
   email        String          @unique @db.VarChar(50)
   password     String          @db.VarChar(50)
   phone        String          @unique @db.VarChar(20)
+  dateOfBirth  DateTime        
   role         Role
   image        String?
+  gender       Gender         
   familyContact String?         @db.VarChar(20)
   affiliation  String?          @db.VarChar(20)
   createdAt    DateTime         @default(now())
@@ -137,4 +139,10 @@ enum Role {
   COORDINATOR
   TEACHER
   STUDENT
+}
+
+enum Gender {
+  MALE 
+  FEMALE 
+  NOT_SPECIFIED 
 }
