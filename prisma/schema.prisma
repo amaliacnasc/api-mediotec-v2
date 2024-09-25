@@ -9,8 +9,10 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  // uncomment next line if you use Prisma <5.10
+  // directUrl = env("DATABASE_URL_UNPOOLED")
 }
 model User {
   userId       String          @id @default(uuid())
@@ -39,7 +41,7 @@ model User {
 model Class {
   classId      String       @id @default(uuid())
   className    String       @db.VarChar(50)
-  year         Int          @db.Int
+  year         Int          @db.Integer
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
@@ -53,7 +55,7 @@ model Course {
   courseId     String       @id @default(uuid())
   courseName   String       @db.VarChar(50)
   description  String       @db.VarChar(200)
-  workload     Int          @db.Int
+  workload     Int          @db.Integer
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
