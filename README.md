@@ -47,7 +47,7 @@ Certifique-se de ter os seguintes itens instalados:
 |--------|----------------------------------------|-------------------------------------|
 | POST   | `/mediotec/disciplinas/`               | Cria uma nova disciplina             |
 | GET    | `/mediotec/disciplinas/`               | Obtém todas as disciplinas           |
-| GET    | `/mediotec/disciplinas/course/:id      | Obtém uma disciplina por ID          |
+| GET    | `/mediotec/disciplinas/course/:id`     | Obtém uma disciplina por ID          |
 | GET    | `/mediotec/disciplinas/:courseName`    | Obtém uma disciplina pelo nome       |
 | GET    | `/mediotec/disciplinas/:courseClass`   | Obtém disciplinas por turma          |
 | GET    | `/mediotec/disciplinas/:userId`        | Obtém disciplinas por usuário        |
