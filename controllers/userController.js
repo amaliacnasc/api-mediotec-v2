@@ -121,6 +121,9 @@ exports.deleteUserById = async(req,res)=>{
         if(!user){
             res.status(404).json({message: 'Usuário não encontrado'}); 
         }
+        await prisma.user.delete({
+            where: { userId: req.params.id },
+        });
         res.json({message: `Usuário ${user.name} deletado com sucesso`})
     }catch(error){
         res.status(500).json({ error: error.message });
