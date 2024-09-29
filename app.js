@@ -23,7 +23,10 @@ app.listen(PORT, () => {
 const usuarios = require('./routes/userRoutes');
 const disciplinas = require('./routes/courseRoutes'); 
 const turmas = require('./routes/classRoute');
+const notification = require('./routes/notificationRoute'); 
+const conceito = require('./routes/conceitoRoute');
 app.use('/mediotec/usuarios', usuarios); 
 app.use('/mediotec/disciplinas',disciplinas);
 app.use('/mediotec/turmas', turmas);
-
+app.use('/mediotec/notificacoes', notification); 
+app.use('/mediotec/conceitos', conceito);

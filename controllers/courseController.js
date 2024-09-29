@@ -33,7 +33,7 @@ exports.getAllCourses = async(req,res) =>{
 exports.getCourseById = async(req,res)=>{
     try{
         const course = await prisma.course.findUnique({
-            where:{courseId: req.params.id}
+            where:{courseId: req.params.courseId}
         })
         if(!course){
             res.status(404).json({message:'Disciplina não encontrada'} )
@@ -48,8 +48,8 @@ exports.getCourseById = async(req,res)=>{
 // fazer tratamento de string to lower pra ele aceitar maiusculo e minusculo
 exports.getCourseByName = async(req,res)=>{
     try{
-        const disciplina = await prisma.course.findMany({
-            where:{courseName:req.params.courseSName}
+        const disciplina = await prisma.course.findUnique({
+            where:{courseName:req.params.courseName}
         }); 
         if(!disciplina){
             res.status(404).json({message: 'Disciplina não encontrada'});

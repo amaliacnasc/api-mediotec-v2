@@ -14,6 +14,7 @@ datasource db {
   // uncomment next line if you use Prisma <5.10
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
+
 model User {
   userId       String          @id @default(uuid())
   name         String          @db.VarChar(50)
@@ -34,8 +35,8 @@ model User {
   classes      UserClass[]
   courses      UserCourse[]
   conceitos    Conceito[]
-  announcementsCreated Announcements[] @relation(name: "AnnouncementAuthor")
-  announcementsReceived Announcements[] @relation(name: "AnnouncementReceiver")
+
+
 }
 
 model Class {
@@ -48,7 +49,8 @@ model Class {
   // Relações
   courses      ClassCourse[] 
   users        UserClass[]    
-  conceitos    Conceito[]
+  conceito     Conceito[]
+
 }
 
 model Course {
@@ -60,7 +62,7 @@ model Course {
   updatedAt    DateTime     @updatedAt
 
   // Relações
-  classes      ClassCourse[] 
+  classes      ClassCourse[]  // relacao n m ou nao 
   users        UserCourse[]  
   conceitos    Conceito[]
 }
@@ -72,12 +74,12 @@ model Conceito {
   updatedAt    DateTime   @updatedAt
 
   // Chaves estrangeiras
-  classId      String
+  classId     String
   courseId     String
   userId       String
   
   // Relações
-  class        Class      @relation(fields: [classId], references: [classId])
+  class        Class @relation(fields: [classId], references: [classId])
   course       Course     @relation(fields: [courseId], references: [courseId])
   user         User       @relation(fields: [userId], references: [userId])
 }
@@ -106,6 +108,8 @@ model UserClass {
   @@id([userId,classId])
 }
 
+// professor e disciplina
+// linkar o a turma com a disciplina 
 model UserCourse {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
@@ -117,20 +121,17 @@ model UserCourse {
   course       Course     @relation(fields: [courseId], references: [courseId])
   @@id([userId, courseId])
 }
+
+
+// tirar relacionamento 
 model Announcements {
   announcementId  String   @id @default(uuid())
   title           String   @db.VarChar(50)
   content         String   @db.VarChar(500)
-
-  authorId        String
-  author          User     @relation(name: "AnnouncementAuthor", fields: [authorId], references: [userId])
-
-  receiverId      String
-  receiver        User     @relation(name: "AnnouncementReceiver", fields: [receiverId], references: [userId])
-
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
+
 enum Conceitos {
   A
   PA 

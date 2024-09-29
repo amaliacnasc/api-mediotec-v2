@@ -68,3 +68,27 @@ Certifique-se de ter os seguintes itens instalados:
 | DELETE | `/mediotec/turmas/delete/:id`       | Deleta uma turma por ID             |
 
 ---
+
+## Conceitos
+
+| Método | Rota                             | Descrição                                        |
+|--------|----------------------------------|--------------------------------------------------|
+| `POST` | `/`                              | Cria um novo conceito.                           |
+| `GET`  | `/conceitos`                     | Obtém todos os conceitos.                        |
+| `GET`  | `/conceito/:conceitoId`          | Obtém um conceito pelo ID.                       |
+| `GET`  | `/conceitos/:turma`              | Obtém conceitos por turma (classId).             |
+| `GET`  | `/conceitos/user/:userId`        | Obtém conceitos de um usuário específico.        |
+| `PUT`  | `/conceito/update/:conceitoId`   | Atualiza um conceito pelo ID.                    |
+| `DELETE`| `/conceito/delete/:conceitoId`  | Deleta um conceito pelo ID.                      |
+
+
+# Notificações
+
+| Método  | Rota                         | Descrição                                      |
+|---------|------------------------------|------------------------------------------------|
+| `POST`  | `/`                          | Cria uma nova notificação.                     |
+| `GET`   | `/`                          | Obtém todas as notificações.                   |
+| `GET`   | `/notification/:title`      | Obtém uma notificação pelo título.             |
+| `GET`   | `/notification/:id`         | Obtém uma notificação pelo ID.                 |
+| `PUT`   | `/notification/:id`         | Atualiza uma notificação pelo ID.              |
+| `DELETE`| `/notification/:id`         | Deleta uma notificação pelo ID.                |

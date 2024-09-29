@@ -65,8 +65,8 @@ exports.updateClassById = async(req,res)=>{
 // DELETE 
 exports.deleteClassById = async(req,res)=>{
     try{
-       const turma = await prisma.user.findUnique({
-            where:{cl:req.params.id}
+       const turma = await prisma.class.findUnique({
+            where:{classId:req.params.id}
         });
         if(!turma){
             res.status(404).json({message: 'Turma não encontrada'}); 
