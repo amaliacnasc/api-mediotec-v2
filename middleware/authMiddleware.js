@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/*const jwt = require('jsonwebtoken');
 const config = require('../config/jwt');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -51,3 +51,4 @@ module.exports = async (req, res, next) => {
         return res.status(401).json({ message: 'Token is not valid', error: error.message });
     }
 };
+*/

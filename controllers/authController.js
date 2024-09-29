@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/*const jwt = require('jsonwebtoken');
 const config = require('../config/jwt');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -41,18 +41,18 @@ exports.register = async (req, res) => {
 };
 exports.login = async (req, res) => {
     try {
-        const { email, password, role } = req.body;
+        const { email, password } = req.body;
 
         // Busca o usuário pelo email
         const user = await prisma.user.findUnique({
-            where: { email: email }
+            where: { email }
         });
 
         // Verifica se o usuário foi encontrado, se o papel corresponde e se a senha está correta
-        if (!user || user.role !== role || !(await bcrypt.compare(password, user.password))) {
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-
+        
         // Gera um token JWT com o userId e role
         const token = jwt.sign(
             { userId: user.userId, role: user.role },
@@ -65,3 +65,4 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+*/

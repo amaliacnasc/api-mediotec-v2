@@ -1,11 +1,44 @@
 const express = require('express'); 
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
+const bcrypt = require('bcrypt');
 // Criar um usuario  -> authController
 
 // Buscar todos os usuários 
 // GET
+exports.register = async (req, res) => {
+    try {
+        const {
+            name, cpf, email, password, phone,
+            dateOfBirth, role, image, gender,
+            familyContact, affiliation
+        } = req.body;
+
+        // Criptografar a senha
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  
+        const user = await prisma.user.create({
+            data: {
+                name,
+                cpf,
+                email,
+                password: hashedPassword,
+                phone,
+                dateOfBirth: new Date(dateOfBirth), 
+                role,
+                image,
+                gender,
+                familyContact,
+                affiliation,
+            },
+        });
+
+        res.status(201).json({ message: 'Usuário criado com sucesso', user });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 exports.getAllUsers = async(req,res)=>{
     try{
         const users = await prisma.user.findMany()
