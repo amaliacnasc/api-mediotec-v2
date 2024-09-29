@@ -3,11 +3,7 @@ const express = require("express");
 const cors = require("cors"); 
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const jwt = require('jsonwebtoken'); 
-const helmet = require('helmet'); 
-const bcrypt = require('bcrypt');
-const authMiddleware = require('./middleware/authMiddleware');
-const { PrismaClient } = require('@prisma/client'); 
+const { PrismaClient } = require('@prisma/client'); // Importando o Prisma Client
 
 const app = express();
 
@@ -29,10 +25,8 @@ const disciplinas = require('./routes/courseRoutes');
 const turmas = require('./routes/classRoute');
 const notification = require('./routes/notificationRoute'); 
 const conceito = require('./routes/conceitoRoute');
-//const loginRegistro = require('./routes/authRoute');
 app.use('/mediotec/usuarios', usuarios); 
 app.use('/mediotec/disciplinas',disciplinas);
 app.use('/mediotec/turmas', turmas);
 app.use('/mediotec/notificacoes', notification); 
 app.use('/mediotec/conceitos', conceito);
-//app.use('/auth', loginRegistro);
