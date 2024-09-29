@@ -2,18 +2,7 @@ const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// Criar um usuario 
-//POST
-exports.createUser = async(req,res)=>{
-    try{
-        const user = await prisma.user.create({
-            data: req.body,
-        });
-        res.status(201).json({message:'Usuário criado com sucesso', user})
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-}
+// Criar um usuario  -> authController
 
 // Buscar todos os usuários 
 // GET
