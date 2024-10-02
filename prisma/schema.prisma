@@ -31,6 +31,7 @@ model User {
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 
+
   // Relações
   classes      UserClass[]
   courses      UserCourse[]
@@ -49,7 +50,6 @@ model Class {
   // Relações
   courses      ClassCourse[] 
   users        UserClass[]    
-  conceito     Conceito[]
 
 }
 
@@ -79,7 +79,7 @@ model Conceito {
   userId       String
   
   // Relações
-  class        Class @relation(fields: [classId], references: [classId])
+
   course       Course     @relation(fields: [courseId], references: [courseId])
   user         User       @relation(fields: [userId], references: [userId])
 }
