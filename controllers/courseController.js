@@ -121,8 +121,9 @@ exports.getCoursebyUser = async (req, res) => {
 
 exports.updateCourseById = async(req,res)=>{
     try{
-        const course = await prisma.course.findUnique({
-            where:{courseId: req.params.id}
+        const course = await prisma.course.update({
+            where:{userId: req.params.id}, 
+            data: req.body,
         }); 
         if(!course){
             return res.status(404).json({ message: "Disciplina não encontrada" });
