@@ -137,7 +137,7 @@ exports.updateCourseById = async(req,res)=>{
 //deletar disciplina pelo id 
 exports.deleteCourseById = async(req,res)=>{
     try{
-        const course = await prisma.course.findUnique({
+        const course = await prisma.course.delete({
             where:{courseId: req.params.id}
         }); 
         if(!course){
