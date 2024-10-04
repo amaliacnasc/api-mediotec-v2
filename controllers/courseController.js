@@ -122,7 +122,7 @@ exports.getCoursebyUser = async (req, res) => {
 exports.updateCourseById = async(req,res)=>{
     try{
         const course = await prisma.course.update({
-            where:{userId: req.params.id}, 
+            where:{courseId: req.params.id}, 
             data: req.body,
         }); 
         if(!course){
