@@ -5,60 +5,16 @@ const prisma = new PrismaClient();
 // Criar um usuario 
 //POST
 exports.createUser = async (req, res) => {
-    try {
-      // Cria o usuário
-      const newUser = await prisma.user.create({
-        data: req.body
-      });
-  
-      // Verifica se a turma existe
-      const classExists = await prisma.class.findUnique({
-        where: { classId: "2334f08f-8981-47bb-9084-0b27186f9ae6" },
-      });
-  
-      if (!classExists) {
-        throw new Error('Turma não encontrada');
-      }
-     
-      // Relaciona o usuário com a turma
-      await prisma.userClass.create({
-        data: {
-          userId: newUser.userId,
-          classId: classExists.classId,
-        },
-      });
-  
-      // Se o usuário for PROFESSOR, exige courseId
-     /* if (newUser.role === 'TEACHER') {
-        if (!courseId) {
-          throw new Error('CourseId é obrigatório para professores.');
-        }
-  
-        // Verifica se o curso existe
-        const courseExists = await prisma.course.findUnique({
-          where: { courseId: courseId },
+    try{
+        const user = await prisma.user.create({
+            data:req.body
         });
-  
-        if (!courseExists) {
-          throw new Error('Curso não encontrado');
-        }
-  
-        // Relaciona o professor ao curso
-        await prisma.userCourse.create({
-          data: {
-            userId: newUser.userId,
-            courseId: courseId,
-          },
-        });
-      }
-  */
-      return newUser;
-    } catch (error) {
-      console.error('Erro ao criar o usuário e associá-lo à turma e curso:', error);
-      throw error;
+        res.status(201).json({message:'Usuário criado com sucesso', user});
+
+    }catch(error){
+        res.json({message:error.message});
     }
-  }
-  
+}
 // Buscar todos os usuários 
 // GET
 exports.getAllUsers = async(req,res)=>{
