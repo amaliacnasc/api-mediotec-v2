@@ -21,8 +21,8 @@ exports.createCourse = async(req,res)=>{
 // buscar todas as disciplinas 
 exports.getAllCourses = async(req,res) =>{
     try{
-        const courses = await prisma.course.findMany(); 
-        res.status(200).json(courses); 
+        const courses = await prisma.course.findMany();
+        res.json(courses);
     }catch(error){
         res.status(400).json({error:error.message});
     }

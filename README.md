@@ -1,11 +1,37 @@
 # Mediotec - Sistema de Gerenciamento Escolar
 
 ## Versão: 1.0.0  
-**Autor**: Amalia Nascimento ,Amanda,  Abraão , Luiz , Luana Comin, Rafael Moura 
+**Autor**: Amalia Nascimento ,Amanda Nascimento,  Abraão Saraiva , Luiz , Luana Comin, Rafael Moura 
 
 ## Descrição
 
 **Mediotec** é um sistema de gerenciamento escolar, que facilita a administração de usuários e dados escolares. O sistema utiliza Node.js, Express e Prisma para gerenciar dados em um banco de dados Postgres.
+
+## Instalação
+
+1. Clone o repositório:
+    ```bash
+    git clone https://github.com/seu-usuario/mediotec.git
+    ```
+
+2. Navegue até o diretório do projeto:
+    ```bash
+    cd mediotec
+    ```
+
+3. Instale as dependências:
+    ```bash
+    npm install
+    ```
+
+4. Crie um arquivo `.env` com as variáveis de ambiente necessárias, como a conexão do banco de dados, chaves JWT, etc.
+
+## Uso
+
+Para rodar o sistema em ambiente de desenvolvimento, utilize o seguinte comando:
+
+```bash
+npm start
 
 ## Requisitos
 
@@ -64,6 +90,18 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 
 # Documentação das Rotas
 
+## Rotas Base 
+| Rota                    | Descrição                                         |
+|-------------------------|---------------------------------------------------|
+| `/mediotec/usuarios`     | Gerenciamento de usuários no sistema              |
+| `/mediotec/disciplinas`  | Gerenciamento das disciplinas                     |
+| `/mediotec/turmas`       | Gerenciamento das turmas                          |
+| `/mediotec/notificacoes` | Gerenciamento de notificações                     |
+| `/mediotec/conceitos`    | Gerenciamento de conceitos                        |
+| `/mediotec/turmaDisc`    | Associação entre turmas e disciplinas             |
+| `/mediotec/turmaUsuario` | Associação entre usuários e turmas                |
+| `/mediotec/usuarioDisc`  | Associação entre usuários e disciplinas           |
+
 ## Usuários
 
 | Método | Rota                                 | Descrição                            |
@@ -76,20 +114,19 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 | PUT    | `/mediotec/usuarios/:id`             | Atualiza um usuário por ID          |
 | DELETE | `/mediotec/usuarios/delete/:id`      | Deleta um usuário por ID            |
 
----
-
 ## Disciplinas
+---
+| Método  | Rota                         | Descrição                                           |
+|---------|------------------------------|-----------------------------------------------------|
+| POST    | `/`                          | Criação de um novo curso                            |
+| GET     | `/`                          | Obtenção de todos os cursos                         |
+| GET     | `/id/:id`                    | Obtenção de um curso pelo seu ID                    |
+| GET     | `/nome/:courseName`           | Obtenção de um curso pelo nome                      |
+| GET     | `/class/:courseClass`         | Obtenção de um curso pela classe                    |
+| GET     | `/user/:userId`               | Obtenção de cursos associados a um usuário          |
+| PUT     | `/courseupdate/:id`           | Atualização de um curso pelo ID                     |
+| DELETE  | `/coursedelete/:id`           | Exclusão de um curso pelo ID                        |
 
-| Método | Rota                                   | Descrição                            |
-|--------|----------------------------------------|-------------------------------------|
-| POST   | `/mediotec/disciplinas/`               | Cria uma nova disciplina             |
-| GET    | `/mediotec/disciplinas/`               | Obtém todas as disciplinas           |
-| GET    | `/mediotec/disciplinas/course/:id`     | Obtém uma disciplina por ID          |
-| GET    | `/mediotec/disciplinas/:courseName`    | Obtém uma disciplina pelo nome       |
-| GET    | `/mediotec/disciplinas/:courseClass`   | Obtém disciplinas por turma          |
-| GET    | `/mediotec/disciplinas/:userId`        | Obtém disciplinas por usuário        |
-| PUT    | `/mediotec/disciplinas/courseupdate/:id`| Atualiza uma disciplina por ID       |
-| DELETE | `/mediotec/disciplinas/coursedelete/:id`| Deleta uma disciplina por ID         |
 
 ---
 
@@ -129,3 +166,28 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 | `GET`   | `/notification/:id`         | Obtém uma notificação pelo ID.                 |
 | `PUT`   | `/notification/:id`         | Atualiza uma notificação pelo ID.              |
 | `DELETE`| `/notification/:id`         | Deleta uma notificação pelo ID.                |
+
+##usuarioTurma 
+| Método  | Rota                          | Descrição                                              |
+|---------|-------------------------------|--------------------------------------------------------|
+| POST    | `/`                           | Criação de uma nova associação entre usuário e turma    |
+| GET     | `/`                           | Obtenção de todas as associações entre usuários e turmas|
+| GET     | `/turma/:classId`             | Obtenção de associações por ID da turma                 |
+| DELETE  | `/`                           | Exclusão de uma associação entre usuário e turma        |
+
+##usuarioDisciplina 
+| Método  | Rota                           | Descrição                                                 |
+|---------|---------------------------------|-----------------------------------------------------------|
+| POST    | `/`                             | Criação de uma nova associação entre usuário e disciplina  |
+| GET     | `/`                             | Obtenção de todas as associações entre usuários e disciplinas|
+| GET     | `/disciplina/:courseId`         | Obtenção de associações por ID da disciplina               |
+| DELETE  | `/`                             | Exclusão de uma associação entre usuário e disciplina      |
+
+##turmaDisciplina
+
+| Método  | Rota                              | Descrição                                                    |
+|---------|------------------------------------|--------------------------------------------------------------|
+| POST    | `/`                                | Criação de uma nova associação entre turma e disciplina       |
+| GET     | `/`                                | Obtenção de todas as associações entre turmas e disciplinas   |
+| GET     | `/turmaDisciplina/:classId`        | Obtenção de associações por ID da turma                      |
+| DELETE  | `/`                                | Exclusão de uma associação entre turma e disciplina           |

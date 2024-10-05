@@ -1,2 +1,0 @@
-Usuario que faz relacionamento com turma -> POST na tabela UserClass , GET na tabela UserClass
-Usuario que faz relacionamento com disciplina 
