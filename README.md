@@ -30,7 +30,6 @@
 
 Para rodar o sistema em ambiente de desenvolvimento, utilize o seguinte comando:
 
-```bash
 npm start
 
 ## Requisitos
