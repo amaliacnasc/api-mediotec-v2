@@ -91,6 +91,7 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 # Documentação das Rotas
 
 ## Rotas Base 
+
 | Rota                    | Descrição                                         |
 |-------------------------|---------------------------------------------------|
 | `/mediotec/usuarios`     | Gerenciamento de usuários no sistema              |
@@ -115,6 +116,7 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 | DELETE | `/mediotec/usuarios/delete/:id`      | Deleta um usuário por ID            |
 
 ## Disciplinas
+
 ---
 | Método  | Rota                         | Descrição                                           |
 |---------|------------------------------|-----------------------------------------------------|
@@ -130,7 +132,7 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 
 ---
 
-## Turmas
+## **Turmas**
 
 | Método | Rota                                | Descrição                            |
 |--------|-------------------------------------|-------------------------------------|
@@ -143,20 +145,20 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 
 ---
 
-## Conceitos
+## **Conceitos**
 
 | Método | Rota                             | Descrição                                        |
 |--------|----------------------------------|--------------------------------------------------|
-| `POST` | `/`                              | Cria um novo conceito.                           |
-| `GET`  | `/conceitos`                     | Obtém todos os conceitos.                        |
-| `GET`  | `/conceito/:conceitoId`          | Obtém um conceito pelo ID.                       |
-| `GET`  | `/conceitos/:turma`              | Obtém conceitos por turma (classId).             |
-| `GET`  | `/conceitos/user/:userId`        | Obtém conceitos de um usuário específico.        |
-| `PUT`  | `/conceito/update/:conceitoId`   | Atualiza um conceito pelo ID.                    |
-| `DELETE`| `/conceito/delete/:conceitoId`  | Deleta um conceito pelo ID.                      |
+| POST  | `/`                              | Cria um novo conceito.                           |
+| GET   | `/conceitos`                     | Obtém todos os conceitos.                        |
+| GET   | `/conceito/:conceitoId`          | Obtém um conceito pelo ID.                       |
+| GET   | `/conceitos/:turma`              | Obtém conceitos por turma (classId).             |
+| GET   | `/conceitos/user/:userId`        | Obtém conceitos de um usuário específico.        |
+| PUT   | `/conceito/update/:conceitoId`   | Atualiza um conceito pelo ID.                    |
+| DELETE| `/conceito/delete/:conceitoId`  | Deleta um conceito pelo ID.                      |
 
 
-# Notificações
+# **Notificações**
 
 | Método  | Rota                         | Descrição                                      |
 |---------|------------------------------|------------------------------------------------|
@@ -167,7 +169,7 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 | `PUT`   | `/notification/:id`         | Atualiza uma notificação pelo ID.              |
 | `DELETE`| `/notification/:id`         | Deleta uma notificação pelo ID.                |
 
-##usuarioTurma 
+## **usuarioTurma** 
 | Método  | Rota                          | Descrição                                              |
 |---------|-------------------------------|--------------------------------------------------------|
 | POST    | `/`                           | Criação de uma nova associação entre usuário e turma    |
@@ -175,7 +177,7 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 | GET     | `/turma/:classId`             | Obtenção de associações por ID da turma                 |
 | DELETE  | `/`                           | Exclusão de uma associação entre usuário e turma        |
 
-##usuarioDisciplina 
+## **usuarioDisciplina** 
 | Método  | Rota                           | Descrição                                                 |
 |---------|---------------------------------|-----------------------------------------------------------|
 | POST    | `/`                             | Criação de uma nova associação entre usuário e disciplina  |
@@ -183,7 +185,7 @@ Este projeto utiliza várias dependências para oferecer suas funcionalidades. A
 | GET     | `/disciplina/:courseId`         | Obtenção de associações por ID da disciplina               |
 | DELETE  | `/`                             | Exclusão de uma associação entre usuário e disciplina      |
 
-##turmaDisciplina
+## **turmaDisciplina**
 
 | Método  | Rota                              | Descrição                                                    |
 |---------|------------------------------------|--------------------------------------------------------------|
