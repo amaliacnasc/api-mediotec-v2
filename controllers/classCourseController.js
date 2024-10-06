@@ -54,9 +54,9 @@ exports.deleteclassCourse = async (req, res) => {
       const { courseId, classId } = req.body;  // Desestruturando o corpo da requisição para pegar userId e classId
       const deletedclassCourse= await prisma.classCourse.delete({
         where: {
-          courseId_classId: {  // Se for uma chave composta
-            courseId: courseId,
-            classId: classId,
+            classId_courseId: {  // Se for uma chave composta
+                classId: classId,
+                courseId: courseId,
           },
         },
       });
