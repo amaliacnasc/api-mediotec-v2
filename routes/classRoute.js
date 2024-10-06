@@ -4,9 +4,9 @@ const turma = require('../controllers/classController');
 
 router.post('/', turma.createClass);
 router.get('/', turma.getAllClasses); 
-router.get('/id/:id', turma.getClassById); 
+router.get('/id/:classId', turma.getClassById); 
 router.get('/year/:year', turma.getClassesByYear); 
-router.put('/update/:id', turma.updateClassById); 
-router.delete('/delete/:id', turma.deleteClassById); 
+router.put('/update/:classId', turma.updateClassById); 
+router.delete('/delete/:classId', turma.deleteClassById); 
 
 module.exports = router;
