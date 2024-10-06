@@ -4,12 +4,12 @@ const Course = require('../controllers/courseController');
 
 router.post('/', Course.createCourse); 
 router.get('/', Course.getAllCourses); 
-router.get('/id/:id', Course.getCourseById); 
+router.get('/id/:courseId', Course.getCourseById); 
 router.get('/nome/:courseName',Course.getCourseByName); 
 router.get('/class/:courseClass',Course.getCourseByClass); 
 router.get('/user/:userId', Course.getCoursebyUser); 
-router.put('/courseupdate/:id', Course.updateCourseById); 
-router.delete('/coursedelete/:id',Course.deleteCourseById); 
+router.put('/courseupdate/:courseId', Course.updateCourseById); 
+router.delete('/coursedelete/:courseId',Course.deleteCourseById); 
 
 module.exports = router;
 
