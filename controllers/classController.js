@@ -36,7 +36,7 @@ exports.getAllClasses = async(req,res)=>{
 exports.getClassById = async(req,res)=>{
     try{
         const turma = await prisma.class.findUnique({
-            where:{classId: req.params.id}
+            where:{classId: req.params.classId}
         })
         res.status(200).json(turma);
     }catch(error){
@@ -49,7 +49,7 @@ exports.getClassById = async(req,res)=>{
 exports.updateClassById = async(req,res)=>{
     try{
         const turma = await prisma.class.update({
-            where:{classId: req.params.id}, 
+            where:{classId: req.params.classId}, 
             data: req.body,
         }); 
         
@@ -66,7 +66,7 @@ exports.updateClassById = async(req,res)=>{
 exports.deleteClassById = async(req,res)=>{
     try{
        const turma = await prisma.class.findUnique({
-            where:{classId:req.params.id}
+            where:{classId:req.params.classId}
         });
         if(!turma){
             res.status(404).json({message: 'Turma não encontrada'}); 
