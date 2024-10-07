@@ -138,7 +138,7 @@ exports.updateCourseById = async(req,res)=>{
 exports.deleteCourseById = async(req,res)=>{
     try{
         const course = await prisma.course.delete({
-            where:{courseId: req.params.id}
+            where:{courseId: req.params.courseId}
         }); 
         if(!course){
             return res.status(404).json({ message: "Turma não encontrada" });
