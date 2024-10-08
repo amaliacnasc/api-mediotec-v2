@@ -148,3 +148,35 @@ exports.deleteCourseById = async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 }
+
+exports.getCourseWithClassesAndUsers = async (req, res) => {
+    try {
+        // Busca a disciplina pelo courseId e inclui as turmas e usuários
+        const course = await prisma.course.findUnique({
+            where: { courseId: req.params.courseId },
+            include: {
+                classes: {
+                    include: {
+                        class: {
+                            include: {
+                                users: {
+                                    include: {
+                                        user: true // Inclui os detalhes dos usuários
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        if (!course) {
+            return res.status(404).json({ message: "Disciplina não encontrada" });
+        }
+
+        res.status(200).json(course);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
