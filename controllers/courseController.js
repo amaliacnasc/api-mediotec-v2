@@ -149,11 +149,10 @@ exports.deleteCourseById = async(req,res)=>{
     }
 }
 
-exports.getCourseWithClassesAndUsers = async (req, res) => {
+exports.getAllCoursesWithClassesAndUsers = async (req, res) => {
     try {
-        // Busca a disciplina pelo courseId e inclui as turmas e usuários
-        const course = await prisma.course.findUnique({
-            where: { courseId: req.params.courseId },
+        // Busca todas as disciplinas e inclui as turmas e os usuários relacionados
+        const courses = await prisma.course.findMany({
             include: {
                 classes: {
                     include: {
@@ -171,11 +170,7 @@ exports.getCourseWithClassesAndUsers = async (req, res) => {
             }
         });
 
-        if (!course) {
-            return res.status(404).json({ message: "Disciplina não encontrada" });
-        }
-
-        res.status(200).json(course);
+        res.status(200).json(courses);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
