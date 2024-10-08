@@ -44,7 +44,7 @@ exports.getNotificationById = async (req, res) => {
 exports.updateNotificationById = async (req, res) => {
     try {
         const updatedNotification = await prisma.announcements.update({
-            where: { announcementId: req.params.id },
+            where: { announcementId: req.params.announcementId },
             data: req.body
         });
         res.status(200).json(updatedNotification);
@@ -57,7 +57,7 @@ exports.updateNotificationById = async (req, res) => {
 exports.deleteNotificationById = async (req, res) => {
     try {
         await prisma.announcements.delete({
-            where: { announcementId: req.params.id }
+            where: { announcementId: req.params.announcementId }
         });
         res.status(200).json({ message: 'Notificação deletada com sucesso' });
     } catch (error) {
