@@ -29,7 +29,7 @@ exports.getAllNotifications = async (req, res) => {
 exports.getNotificationById = async (req, res) => {
     try {
         const notification = await prisma.announcements.findUnique({
-            where: { announcementId: req.params.id }
+            where: { announcementId: req.params.announcementId }
         });
         if (!notification) {
             return res.status(404).json({ message: 'Notificação não encontrada' });
