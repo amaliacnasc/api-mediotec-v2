@@ -8,7 +8,7 @@ router.get('/id/:courseId', Course.getCourseById);
 router.get('/nome/:courseName',Course.getCourseByName); 
 router.get('/class/:courseClass',Course.getCourseByClass); 
 router.get('/user/:userId', Course.getCoursebyUser); 
-router.get('/todos', Course.getCourseWithClassesAndUsers)
+router.get('/todos', Course.getAllCoursesWithClassesAndUsers)
 router.put('/courseupdate/:courseId', Course.updateCourseById); 
 ///mediotec/disciplinas/courseupdate/${currentCourseId}`, newCourse
 router.delete('/coursedelete/:courseId',Course.deleteCourseById); 
