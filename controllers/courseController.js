@@ -148,3 +148,30 @@ exports.deleteCourseById = async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 }
+
+exports.getAllCoursesWithClassesAndUsers = async (req, res) => {
+    try {
+        // Busca todas as disciplinas e inclui as turmas e os usuários relacionados
+        const courses = await prisma.course.findMany({
+            include: {
+                classes: {
+                    include: {
+                        class: {
+                            include: {
+                                users: {
+                                    include: {
+                                        user: true // Inclui os detalhes dos usuários
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        res.status(200).json(courses);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

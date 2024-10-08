@@ -31,13 +31,10 @@ model User {
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 
-
   // Relações
   classes      UserClass[]
   courses      UserCourse[]
   conceitos    Conceito[]
-
-
 }
 
 model Class {
@@ -50,7 +47,6 @@ model Class {
   // Relações
   courses      ClassCourse[] 
   users        UserClass[]    
-
 }
 
 model Course {
@@ -62,7 +58,7 @@ model Course {
   updatedAt    DateTime     @updatedAt
 
   // Relações
-  classes      ClassCourse[]  // relacao n m ou nao 
+  classes      ClassCourse[]  
   users        UserCourse[]  
   conceitos    Conceito[]
 }
@@ -75,24 +71,23 @@ model Conceito {
 
   // Chaves estrangeiras
   classId     String
-  courseId     String
-  userId       String
+  courseId    String
+  userId      String
   
   // Relações
-
-  course       Course     @relation(fields: [courseId], references: [courseId])
-  user         User       @relation(fields: [userId], references: [userId])
+  course       Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
+  user         User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model ClassCourse {
-  
   classId      String
   courseId     String
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+
   // Relações
-  class        Class      @relation(fields: [classId], references: [classId])
-  course       Course     @relation(fields: [courseId], references: [courseId])
+  class        Class      @relation(fields: [classId], references: [classId], onDelete: Cascade, onUpdate: Cascade)
+  course       Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
   @@id([classId, courseId])
 }
 
@@ -103,13 +98,11 @@ model UserClass {
   classId      String
 
   // Relações
-  user         User       @relation(fields: [userId], references: [userId])
-  class        Class      @relation(fields: [classId], references: [classId])
-  @@id([userId,classId])
+  user         User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
+  class        Class      @relation(fields: [classId], references: [classId], onDelete: Cascade, onUpdate: Cascade)
+  @@id([userId, classId])
 }
 
-// professor e disciplina
-// linkar o a turma com a disciplina 
 model UserCourse {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
@@ -117,13 +110,11 @@ model UserCourse {
   courseId     String
 
   // Relações
-  user         User       @relation(fields: [userId], references: [userId])
-  course       Course     @relation(fields: [courseId], references: [courseId])
+  user         User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
+  course       Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
   @@id([userId, courseId])
 }
 
-
-// tirar relacionamento 
 model Announcements {
   announcementId  String   @id @default(uuid())
   title           String   @db.VarChar(50)
