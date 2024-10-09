@@ -10,4 +10,3 @@ router.put('/notification/:announcementId', notifications.updateNotificationById
 router.delete('/notification/:announcementId', notifications.deleteNotificationById); 
 
 module.exports = router;
-

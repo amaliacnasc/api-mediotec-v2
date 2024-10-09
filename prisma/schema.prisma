@@ -124,11 +124,9 @@ model Announcements {
 }
 
 enum Conceitos {
-  EX
-  OT 
-  B
-  ANS
-  I 
+  A
+  PA 
+  NA 
 }
 
 enum Role {
