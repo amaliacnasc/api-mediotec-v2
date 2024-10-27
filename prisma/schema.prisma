@@ -1,142 +1,128 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Definindo o datasource e o gerador de cliente
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-  // uncomment next line if you use Prisma <5.10
-  // directUrl = env("DATABASE_URL_UNPOOLED")
-}
-
-model User {
-  userId       String          @id @default(uuid())
-  name         String          @db.VarChar(50)
-  cpf          String          @unique @db.VarChar(11)
-  email        String          @unique @db.VarChar(50)
-  password     String          @db.VarChar(50)
-  phone        String          @unique @db.VarChar(20)
-  dateOfBirth  DateTime        
-  role         Role
-  image        String?
-  gender       Gender         
-  familyContact String?         @db.VarChar(20)
-  affiliation  String?          @db.VarChar(20)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-
-  // Relações
-  classes      UserClass[]
-  courses      UserCourse[]
-  conceitos    Conceito[]
-}
-
-model Class {
-  classId      String       @id @default(uuid())
-  className    String       @db.VarChar(50)
-  year         Int          @db.Integer
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  // Relações
-  courses      ClassCourse[] 
-  users        UserClass[]    
-}
-
-model Course {
-  courseId     String       @id @default(uuid())
-  courseName   String       @db.VarChar(50)
-  description  String       @db.VarChar(200)
-  workload     Int          @db.Integer
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  // Relações
-  classes      ClassCourse[]  
-  users        UserCourse[]  
-  conceitos    Conceito[]
-}
-
-model Conceito {
-  conceitoId   String     @id @default(uuid())
-  conceito     Conceitos
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-
-  // Chaves estrangeiras
-  classId     String
-  courseId    String
-  userId      String
-  
-  // Relações
-  course       Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
-  user         User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
-}
-
-model ClassCourse {
-  classId      String
-  courseId     String
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  // Relações
-  class        Class      @relation(fields: [classId], references: [classId], onDelete: Cascade, onUpdate: Cascade)
-  course       Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
-  @@id([classId, courseId])
-}
-
-model UserClass {
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  userId       String
-  classId      String
-
-  // Relações
-  user         User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
-  class        Class      @relation(fields: [classId], references: [classId], onDelete: Cascade, onUpdate: Cascade)
-  @@id([userId, classId])
-}
-
-model UserCourse {
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  userId       String
-  courseId     String
-
-  // Relações
-  user         User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
-  course       Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
-  @@id([userId, courseId])
-}
-
-model Announcements {
-  announcementId  String   @id @default(uuid())
-  title           String   @db.VarChar(50)
-  content         String   @db.VarChar(500)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-}
-
-enum Conceitos {
-  A
-  PA 
-  NA 
-}
 
 enum Role {
-  COORDINATOR
+  ADMIN
   TEACHER
-  STUDENT
+  COORDINATOR
 }
 
 enum Gender {
-  MALE 
-  FEMALE 
-  NOT_SPECIFIED 
+  MALE
+  FEMALE
+  OTHER
+}
+
+// Enum para `conceito` e `unidade`
+enum ConceitoEnum {
+  E // excelente
+  B //bom
+  R //regular
+  I // insuficiente
+}
+
+enum UnidadeEnum {
+  UNIT1
+  UNIT2
+  FINAL 
+}
+
+// Modelo `User`
+model User {
+  userId        String      @id @default(uuid()) @db.Char(36)
+  userName      String      @db.VarChar(50)
+  cpf           String      @unique @db.VarChar(11)
+  email         String      @unique @db.VarChar(50)
+  password      String      @db.VarChar(255)
+  phone         String?     @db.VarChar(20)
+  dateOfBirth   DateTime?
+  role          Role
+  image         String?     @db.VarChar(255)
+  gender        Gender
+  familyContact String?     @db.VarChar(20)
+  affiliation   String?     @db.VarChar(20)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relações
+  userClassCourses UserClassCourse[]
+  announcements    Announcement[]
+}
+
+// Modelo `Course`
+model Course {
+  courseId    String            @id @default(uuid()) @db.Char(36)
+  courseName  String            @db.VarChar(50)
+  description String            @db.VarChar(2000)
+  workload    Int               @db.Integer
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Relações
+  userClassCourses UserClassCourse[]
+}
+
+// Modelo `Class`
+model Class {
+  classId    String            @id @default(uuid()) @db.Char(36)
+  className  String            @db.VarChar(50)
+  year       Int               @db.Integer
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  // Relações
+  userClassCourses UserClassCourse[]
+}
+
+// Modelo `UserClassCourse` para relação `User`, `Class` e `Course`
+model UserClassCourse {
+  user_class_courseId String   @id @default(uuid()) @db.VarChar(36)
+  courseId            String   @db.Char(36)
+  classId             String   @db.Char(36)
+  userId              String   @db.Char(36)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relações
+  user       User       @relation(fields: [userId], references: [userId])
+  class      Class      @relation(fields: [classId], references: [classId])
+  course     Course     @relation(fields: [courseId], references: [courseId])
+  conceitos  Conceito[] // Relação inversa com `Conceito`
+
+  // Índices compostos
+  @@unique([courseId, classId, userId])
+}
+
+// Modelo `Conceito`
+model Conceito {
+  conceitoId          String        @id @default(uuid()) @db.Char(36)
+  conceito            ConceitoEnum
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  unidade             UnidadeEnum
+  user_class_courseId String        @db.VarChar(45)
+
+  // Relações
+  userClassCourse UserClassCourse @relation(fields: [user_class_courseId], references: [user_class_courseId])
+}
+
+// Modelo `Announcement`
+model Announcement {
+  announcementId String    @id @default(uuid()) @db.Char(36)
+  title          String    @db.VarChar(50)
+  content        String    @db.VarChar(2000)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  userId         String    @db.Char(36)
+
+  // Relações
+  user User @relation(fields: [userId], references: [userId])
 }

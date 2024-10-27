@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 // Criar um usuario 
 //POST
-exports.createUser = async (req, res) => {
+/*exports.createUser = async (req, res) => {
     try{
         const user = await prisma.user.create({
             data:req.body
@@ -14,7 +14,7 @@ exports.createUser = async (req, res) => {
     }catch(error){
         res.json({message:error.message});
     }
-}
+}*/
 // Buscar todos os usuários 
 // GET
 exports.getAllUsers = async(req,res)=>{
