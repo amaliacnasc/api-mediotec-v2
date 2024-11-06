@@ -32,9 +32,20 @@ enum ConceitoEnum {
 enum UnidadeEnum {
   UNIT1
   UNIT2
+  AVG
   FINAL 
 }
 
+enum ResultConceito {
+  APPROVED
+  FAILED 
+}
+
+enum AnnouncementType {
+  EVENT 
+  NEWS 
+
+}
 // Modelo `User`
 model User {
   userId        String      @id @default(uuid()) @db.Char(36)
@@ -108,6 +119,7 @@ model Conceito {
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
   unidade             UnidadeEnum
+  result              ResultConceito //no prototipo situacao 
   user_class_courseId String        @db.VarChar(45)
 
   // Relações
@@ -122,6 +134,7 @@ model Announcement {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   userId         String    @db.Char(36)
+  announcementType AnnouncementType
 
   // Relações
   user User @relation(fields: [userId], references: [userId])
