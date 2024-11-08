@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 
 
 
-// buscar todas as turmas de um ano 
 
 
 //criar turma 
@@ -43,7 +42,17 @@ exports.getClassById = async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 }
-
+//  busca turma pelo nome 
+exports.getClassByName = async(req,res)=>{
+    try{
+        const turma = await prisma.class.findUnique({
+            where:{className: req.params.className}
+        })
+        res.status(200).json(turma);
+    }catch(error){
+        res.status(500).json({message:error.message});
+    }
+}
 // atualizar turma pelo id
 // PUT
 exports.updateClassById = async(req,res)=>{
@@ -101,3 +110,51 @@ exports.getClassesByYear = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// Busca todas as disciplinas de uma turma 
+
+exports.getAllCoursesOfClassId = async (req, res) => {
+    try {
+      const disciplinas = await prisma.userClassCourse.findMany({
+        where: { classId: req.params.classId },
+        include: {
+          course: true, // Inclui todas as informações do curso relacionado
+        },
+      });
+      res.status(200).json(disciplinas);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  // busca todas as turmas de um usuario (professor)
+  exports.getAllClassesOfUserId = async (req, res) => {
+    try {
+      const turmas = await prisma.userClassCourse.findMany({
+        where: { userId: req.params.userId },
+        include: {
+          class: true, // Inclui todas as informações da turma relacionada
+        },
+      });
+      res.status(200).json(turmas);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+  // Buscar todas as turmas que não tem disciplinas cadastradas 
+  exports.getClassesWithoutCourses = async (req, res) => {
+    try {
+      const turmasSemDisciplinas = await prisma.class.findMany({
+        where: {
+          userClassCourses: {
+            none: {}, // Retorna apenas as turmas que não têm registros na tabela UserClassCourse
+          },
+        },
+      });
+      res.status(200).json(turmasSemDisciplinas);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  

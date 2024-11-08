@@ -7,8 +7,9 @@ const { Conceitos } = require("@prisma/client");
 router.post('/', conceito.createConceito ); 
 router.get('/conceitos', conceito.getAllConceitos); 
 router.get('/conceito/:conceitoId', conceito.getConceitoById);
-router.get('/conceitos/:turma', conceito.getConceitoByClass);
-router.get('/conceitos/user/:userId', conceito.getConceitoByUser);
+router.get('/conceitos/:courseId', conceito.getAllConceitosOfCourseId); // busca todos os conceitos de uma disciplina 
+router.get('/conceitos/user/:userId', conceito.getAllConceitosOfUserId); // busca todos os conceitos de um usuario 
+router.get('/conceitos/:classId/:unidade', conceito.getConceitosByClassAndUnidade);
 router.put('/conceito/update/:conceitoId', conceito.updateConceitoById); 
 router.delete('/conceito/delete/:conceitoId', conceito.deleteConceitoById);
 

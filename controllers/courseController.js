@@ -60,63 +60,6 @@ exports.getCourseByName = async(req,res)=>{
     }
 }
 
-// buscar todas as disciplinas de uma turma 
-exports.getCourseByClass = async (req, res) => {
-    try {
-        // Primeiro, encontra a turma pelo nome
-        const turma = await prisma.class.findUnique({
-            where: { className: req.params.className },
-            include: { courses: true }  // Inclui o relacionamento com as disciplinas
-        });
-
-        if (!turma) {
-            return res.status(404).json({ message: "Turma não encontrada" });
-        }
-
-        // Pega os ids dos cursos associados à turma
-        const coursesIds = turma.courses.map(classCourse => classCourse.courseId);
-
-        // Busca as disciplinas (courses) associadas aos ids obtidos
-        const courses = await prisma.course.findMany({
-            where: {
-                courseId: { in: coursesIds }
-            }
-        });
-
-        res.status(200).json(courses);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-// Buscar disciplina pelo usuario 
-exports.getCoursebyUser = async (req, res) => {
-    try {
-        // Primeiro, busca o usuário pelo ID
-        const user = await prisma.user.findUnique({
-            where: { userId: req.params.id },
-            include: {
-                courses: {
-                    include: {
-                        course: true  // Inclui os dados dos cursos
-                    }
-                }
-            }
-        });
-
-        if (!user) {
-            return res.status(404).json({ message: "Usuário não encontrado" });
-        }
-
-        // Extrai os cursos relacionados
-        const courses = user.courses.map(userCourse => userCourse.course);
-
-        res.status(200).json(courses);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 // atualizar disciplina pelo id 
 
 exports.updateCourseById = async(req,res)=>{
@@ -149,29 +92,35 @@ exports.deleteCourseById = async(req,res)=>{
     }
 }
 
-exports.getAllCoursesWithClassesAndUsers = async (req, res) => {
+// Buscar disciplina que tenha ambos usuarios e turmas matriculadas
+exports.getCoursesWithUsersAndClasses = async (req, res) => {
     try {
-        // Busca todas as disciplinas e inclui as turmas e os usuários relacionados
-        const courses = await prisma.course.findMany({
+      const cursos = await prisma.course.findMany({
+        where: {
+          userClassCourses: {
+            some: {
+              userId: {
+                not: null, // Verifica que existe pelo menos um usuário associado
+              },
+              classId: {
+                not: null, // Verifica que existe pelo menos uma turma associada
+              },
+            },
+          },
+        },
+        include: {
+          userClassCourses: {
             include: {
-                classes: {
-                    include: {
-                        class: {
-                            include: {
-                                users: {
-                                    include: {
-                                        user: true // Inclui os detalhes dos usuários
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        res.status(200).json(courses);
+              user: true,  // Inclui os dados dos usuários
+              class: true, // Inclui os dados das turmas
+            },
+          },
+        },
+      });
+  
+      res.status(200).json(cursos);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
-};
+  };
+  
