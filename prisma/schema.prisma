@@ -10,9 +10,10 @@ generator client {
 
 
 enum Role {
-  ADMIN
+  
   TEACHER
   COORDINATOR
+  STUDENT 
 }
 
 enum Gender {
