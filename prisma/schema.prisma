@@ -1,7 +1,7 @@
 // Definindo o datasource e o gerador de cliente
 datasource db {
   provider = "postgresql"
-  url      ="postgresql://neondb_owner:MGb5lZS8RWpw@ep-red-haze-a5elpk89.us-east-2.aws.neon.tech/neondb?sslmode=require"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -10,7 +10,7 @@ generator client {
 
 
 enum Role {
-  STUDENT // comment 
+  STUDENT // comment
   TEACHER
   COORDINATOR
    
