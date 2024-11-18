@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'COORDINATOR');
+CREATE TYPE "Role" AS ENUM ('STUDENT', 'TEACHER', 'COORDINATOR');
 
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
@@ -8,7 +8,13 @@ CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 CREATE TYPE "ConceitoEnum" AS ENUM ('E', 'B', 'R', 'I');
 
 -- CreateEnum
-CREATE TYPE "UnidadeEnum" AS ENUM ('UNIT1', 'UNIT2', 'FINAL');
+CREATE TYPE "UnidadeEnum" AS ENUM ('UNIT1', 'UNIT2', 'AVG', 'FINAL');
+
+-- CreateEnum
+CREATE TYPE "ResultConceito" AS ENUM ('APPROVED', 'FAILED');
+
+-- CreateEnum
+CREATE TYPE "AnnouncementType" AS ENUM ('EVENT', 'NEWS');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -16,9 +22,9 @@ CREATE TABLE "User" (
     "userName" VARCHAR(50) NOT NULL,
     "cpf" VARCHAR(11) NOT NULL,
     "email" VARCHAR(50) NOT NULL,
-    "password" VARCHAR(50) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
     "phone" VARCHAR(20),
-    "dateOfBirth" TIMESTAMP(3) NOT NULL,
+    "dateOfBirth" TIMESTAMP(3),
     "role" "Role" NOT NULL,
     "image" VARCHAR(255),
     "gender" "Gender" NOT NULL,
@@ -72,6 +78,7 @@ CREATE TABLE "Conceito" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "unidade" "UnidadeEnum" NOT NULL,
+    "result" "ResultConceito" NOT NULL,
     "user_class_courseId" VARCHAR(45) NOT NULL,
 
     CONSTRAINT "Conceito_pkey" PRIMARY KEY ("conceitoId")
@@ -85,6 +92,7 @@ CREATE TABLE "Announcement" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" CHAR(36) NOT NULL,
+    "announcementType" "AnnouncementType" NOT NULL,
 
     CONSTRAINT "Announcement_pkey" PRIMARY KEY ("announcementId")
 );

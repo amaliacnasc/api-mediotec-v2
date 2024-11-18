@@ -13,7 +13,6 @@ enum Role {
   STUDENT
   TEACHER
   COORDINATOR
-  ESTUDANTE
    
 }
 
