@@ -42,7 +42,7 @@ module.exports = async (req, res, next) => {
 
       return next();
     }
-
+    
     if (role === 'TEACHER') {
       if (req.method === 'POST' && (resource === 'Announcement' || resource === 'Conceito')) {
         return next();

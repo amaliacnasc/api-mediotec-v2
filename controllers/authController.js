@@ -9,6 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'sua_chave_secreta_supersegura';
 // Função para registrar um novo usuário
 exports.register = async (req, res) => {
     console.log('rodou 1 linha')
+    console.log(req.body)
   try {
     const userData = {
         userName,
@@ -23,6 +24,7 @@ exports.register = async (req, res) => {
         familyContact,
         affiliation,
       } = req.body;
+    console.log('rodou linha 2')
     console.log(userData)
     // Verifica se o usuário já existe pelo email ou CPF
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -35,6 +37,9 @@ exports.register = async (req, res) => {
     // Criptografa a senha antes de salvar
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    console.log("linha 3")
+    console.log(userName)
+    console.log(role)
     // Cria o novo usuário no banco de dados
     const newUser = await prisma.user.create({
       data: {
@@ -60,6 +65,7 @@ exports.register = async (req, res) => {
 };
 
 // Função para login de usuário
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
