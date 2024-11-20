@@ -60,7 +60,7 @@ exports.register = async (req, res) => {
     res.status(201).json({ message: 'Usuário registrado com sucesso!', user: newUser });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: req.body });
+    res.status(500).json({ message: error});
   }
 };
 
@@ -92,6 +92,6 @@ exports.login = async (req, res) => {
     res.status(200).json({ message: 'Login bem-sucedido!', token });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Erro ao realizar login.' });
+    res.status(500).json({ message: 'Erro ao realizar login.', error });
   }
 };
