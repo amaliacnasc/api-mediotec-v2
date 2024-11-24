@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 // criar um conceito
 exports.createConceito = async(req,res)=>{
     try{
-        conceito = await prisma.conceito.create({
+        const conceito = await prisma.conceito.create({
             data:req.body
         });
         res.status(200).json(conceito);

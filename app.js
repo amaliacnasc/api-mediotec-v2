@@ -28,6 +28,7 @@ const disciplinas = require('./routes/courseRoutes');
 const turmas = require('./routes/classRoute');
 const notification = require('./routes/notificationRoute'); 
 const conceito = require('./routes/conceitoRoute');
+const relationship = require('./routes/relationship');
 const authMiddleware = require('./authMiddleware/authMiddleware')
 app.use('/auth', authRoutes);  // Novo - Rotas de autenticação (ex.: /auth/login e /auth/register)
 app.use('/mediotec/usuarios', usuarios); 
@@ -35,3 +36,4 @@ app.use('/mediotec/disciplinas',disciplinas);
 app.use('/mediotec/turmas', turmas);
 app.use('/mediotec/notificacoes', notification); 
 app.use('/mediotec/conceitos', conceito);
+app.use('/mediotec/relacionamento', relationship); 
