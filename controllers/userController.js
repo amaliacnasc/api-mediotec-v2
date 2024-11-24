@@ -54,7 +54,7 @@ exports.getUserByEmail = async(req,res)=>{
 //buscar usuario pelo tipo 
 exports.getUserByType= async(req,res)=>{
     try{
-        const usuario = await prisma.user.findUnique({
+        const usuario = await prisma.user.findMany({
             where:{role: req.params.role}
         })
         res.status(200).json(usuario);
