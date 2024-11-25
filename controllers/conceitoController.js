@@ -5,17 +5,34 @@ const prisma = new PrismaClient();
 
 
 
-// criar um conceito
-exports.createConceito = async(req,res)=>{
-    try{
-        const conceito = await prisma.conceito.create({
-            data:req.body
-        });
-        res.status(200).json(conceito);
-    }catch(error){
-        res.status(500).json({message: error.message});
-    }
-}
+// Criar um conceito
+exports.createConceito = async (req, res) => {
+  try {
+      const { conceito, unidade, result, user_class_courseId } = req.body;
+
+      // Verifica se o campo user_class_courseId está presente
+      if (!user_class_courseId) {
+          return res.status(400).json({ message: "O campo 'user_class_courseId' é obrigatório." });
+      }
+
+      
+      const novoConceito = await prisma.conceito.create({
+          data: {
+              conceito,
+              unidade, 
+              result, 
+              userClassCourse: {
+                  connect: { user_class_courseId }, 
+              },
+          },
+      });
+
+      res.status(200).json(novoConceito);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+};
+
 
 // Buscar todos os conceitos 
 exports.getAllConceitos = async (req, res) => {
