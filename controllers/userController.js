@@ -15,18 +15,33 @@ exports.getAllUsers= async(req,res)=>{
     }
 }
 
-// Buscar usuário pelo id 
+// Buscar usuário pelo id
 // GET
-exports.getUserById = async(req,res)=>{
-    try{
+exports.getUserById = async (req, res) => {
+    try {
+        const { userId } = req.params;  
+        
+     
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+   
         const usuario = await prisma.user.findUnique({
-            where:{userId: req.params.userId}
-        })
+            where: { userId: userId }
+        });
+
+   
+        if (!usuario) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
         res.status(200).json(usuario);
-    }catch(error){
-        res.status(500).json({message:error.message});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 //Buscar usuario pelo nome 
 //GET
