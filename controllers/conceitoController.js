@@ -138,6 +138,26 @@ exports.getConceitosByClassAndUnidade = async (req, res) => {
   };
   
 
+  exports.getConceitoByCourseAndUser = async (req, res) => {
+    try {
+      const conceitos = await prisma.conceito.findMany({
+        where: {
+          userClassCourse: {
+            courseId: req.params.courseId, // Filtra pela turma
+            userId: req.params.userId, // Filtra pelo usuário
+          },
+        },
+        include: {
+          userClassCourse: true, // Inclui informações da relação com a turma e o curso, se necessário
+        },
+      });
+      res.status(200).json(conceitos);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
 // deletar conceito pelo id 
 exports.deleteConceitoById = async(req,res)=>{
     try{

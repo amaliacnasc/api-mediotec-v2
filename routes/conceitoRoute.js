@@ -12,5 +12,5 @@ router.get('/user/:userId', conceito.getAllConceitosOfUserId); // busca todos os
 router.get('/conceitos/:classId/:unidade', conceito.getConceitosByClassAndUnidade);
 router.put('/conceito/update/:conceitoId', conceito.updateConceitoById); 
 router.delete('/conceito/delete/:conceitoId', conceito.deleteConceitoById);
-
+router.get('/conceitos/:courseId/:userId', conceito.getConceitoByCourseAndUser);
 module.exports = router;
