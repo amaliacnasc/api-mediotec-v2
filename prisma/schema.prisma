@@ -104,9 +104,9 @@ model UserClassCourse {
   updatedAt           DateTime @updatedAt
 
   // Relações
-  user       User       @relation(fields: [userId], references: [userId])
-  class      Class      @relation(fields: [classId], references: [classId])
-  course     Course     @relation(fields: [courseId], references: [courseId])
+  user       User       @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
+  class      Class      @relation(fields: [classId], references: [classId], onDelete: Cascade, onUpdate: Cascade)
+  course     Course     @relation(fields: [courseId], references: [courseId], onDelete: Cascade, onUpdate: Cascade)
   conceitos  Conceito[] // Relação inversa com `Conceito`
 
   // Índices compostos
@@ -120,12 +120,13 @@ model Conceito {
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
   unidade             UnidadeEnum
-  result              ResultConceito //no prototipo situacao 
+  result              ResultConceito
   user_class_courseId String        @db.VarChar(45)
 
   // Relações
-  userClassCourse UserClassCourse @relation(fields: [user_class_courseId], references: [user_class_courseId])
+  userClassCourse UserClassCourse @relation(fields: [user_class_courseId], references: [user_class_courseId], onDelete: Cascade, onUpdate: Cascade)
 }
+
 
 // Modelo `Announcement`
 model Announcement {
