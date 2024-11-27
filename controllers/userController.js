@@ -108,21 +108,23 @@ exports.getAllUsersOfCourse = async (req, res) => {
 
 // atualizar usuario pelo id
 // PUT
-exports.updateUserById = async(req,res)=>{
-    try{
+exports.updateUserById = async (req, res) => {
+    try {
+        const { password, ...updateData } = req.body;
+
         const usuario = await prisma.user.update({
-            where:{userId: req.params.userId}, 
-            data: req.body,
-        }); 
-        
-        if(!usuario){
-            res.status(404).json({message: 'Usuario não encontrado'}); 
+            where: { userId: req.params.userId },
+            data: updateData,
+        });
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
         }
         res.json(usuario);
-    }catch(error){
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}; 
+};
+
 // Deletar usuario pelo Id
 // DELETE 
 exports.deleteUserById = async(req,res)=>{

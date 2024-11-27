@@ -130,14 +130,14 @@ model Conceito {
 
 // Modelo `Announcement`
 model Announcement {
-  announcementId String    @id @default(uuid()) @db.Char(36)
-  title          String    @db.VarChar(50)
-  content        String    @db.VarChar(2000)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  userId         String    @db.Char(36)
+  announcementId   String     @id @default(uuid()) @db.Char(36)
+  title            String     @db.VarChar(50)
+  content          String     @db.VarChar(2000)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  userId           String     @db.Char(36)
   announcementType AnnouncementType
 
-  // Relações
-  user User @relation(fields: [userId], references: [userId])
+  // Relação com User
+  user User @relation(fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
 }
