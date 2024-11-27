@@ -127,3 +127,108 @@ exports.updateRelationship = async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 };
+
+
+exports.getRelationshipsGroupedByUser = async (req, res) => {
+  try {
+    const relationships = await prisma.userClassCourse.findMany({
+      include: {
+        user: true,
+        class: true,
+        course: true,
+      },
+    });
+
+    const groupedByUser = relationships.reduce((acc, relationship) => {
+      const { user } = relationship;
+      if (!acc[user.userId]) {
+        acc[user.userId] = {
+          user,
+          relationships: [],
+        };
+      }
+      acc[user.userId].relationships.push({
+        class: relationship.class,
+        course: relationship.course,
+        createdAt: relationship.createdAt,
+        updatedAt: relationship.updatedAt,
+      });
+      return acc;
+    }, {});
+
+    res.status(200).json(groupedByUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+exports.getRelationshipsGroupedByCourse = async (req, res) => {
+  try {
+    const relationships = await prisma.userClassCourse.findMany({
+      include: {
+        user: true,
+        class: true,
+        course: true,
+      },
+    });
+
+    const groupedByCourse = relationships.reduce((acc, relationship) => {
+      const { course } = relationship;
+      if (!acc[course.courseId]) {
+        acc[course.courseId] = {
+          course,
+          relationships: [],
+        };
+      }
+      acc[course.courseId].relationships.push({
+        user: relationship.user,
+        class: relationship.class,
+        createdAt: relationship.createdAt,
+        updatedAt: relationship.updatedAt,
+      });
+      return acc;
+    }, {});
+
+    res.status(200).json(groupedByCourse);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+exports.getRelationshipsGroupedByClass = async (req, res) => {
+  try {
+    const relationships = await prisma.userClassCourse.findMany({
+      include: {
+        user: true,
+        class: true,
+        course: true,
+      },
+    });
+
+    const groupedByClass = relationships.reduce((acc, relationship) => {
+      const { class: turma } = relationship;
+      if (!acc[turma.classId]) {
+        acc[turma.classId] = {
+          class: turma,
+          relationships: [],
+        };
+      }
+      acc[turma.classId].relationships.push({
+        user: relationship.user,
+        course: relationship.course,
+        createdAt: relationship.createdAt,
+        updatedAt: relationship.updatedAt,
+      });
+      return acc;
+    }, {});
+
+    res.status(200).json(groupedByClass);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
