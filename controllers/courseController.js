@@ -18,33 +18,58 @@ exports.createCourse = async(req,res)=>{
     }
 }
 
-// Buscar todas as disciplinas com userId e classId associados
+// Buscar todas as disciplinas com userId e classId associados, separados por tipo de usuário
 exports.getAllCourses = async (req, res) => {
     try {
         const courses = await prisma.course.findMany({
             include: {
                 userClassCourses: {
-                    select: {
-                        userId: true,
-                        classId: true,
+                    include: {
+                        user: {
+                            select: {
+                                userId: true,
+                                role: true,
+                            },
+                        },
+                        class: {
+                            select: {
+                                classId: true,
+                            },
+                        },
                     },
                 },
             },
         });
 
-        // Formatar o retorno para melhor leitura (opcional)
-        const formattedCourses = courses.map(course => ({
-            courseId: course.courseId,
-            courseName: course.courseName,
-            description: course.description,
-            workload: course.workload,
-            createdAt: course.createdAt,
-            updatedAt: course.updatedAt,
-            associations: course.userClassCourses.map(assoc => ({
-                userId: assoc.userId,
-                classId: assoc.classId,
-            })),
-        }));
+        // Formatar o retorno para separar os usuários por tipo
+        const formattedCourses = courses.map(course => {
+            const teachers = [];
+            const students = [];
+
+            course.userClassCourses.forEach(assoc => {
+                const { userId, role } = assoc.user;
+                const { classId } = assoc.class;
+
+                if (role === "TEACHER") {
+                    teachers.push({ userId, classId });
+                } else if (role === "STUDENT") {
+                    students.push({ userId, classId });
+                }
+            });
+
+            return {
+                courseId: course.courseId,
+                courseName: course.courseName,
+                description: course.description,
+                workload: course.workload,
+                createdAt: course.createdAt,
+                updatedAt: course.updatedAt,
+                associations: {
+                    teachers,
+                    students,
+                },
+            };
+        });
 
         res.json(formattedCourses);
     } catch (error) {
