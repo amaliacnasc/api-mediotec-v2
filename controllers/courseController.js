@@ -18,16 +18,39 @@ exports.createCourse = async(req,res)=>{
     }
 }
 
-// buscar todas as disciplinas 
-exports.getAllCourses = async(req,res) =>{
-    try{
-        const courses = await prisma.course.findMany();
-        res.json(courses);
-    }catch(error){
-        res.status(400).json({error:error.message});
+// Buscar todas as disciplinas com userId e classId associados
+exports.getAllCourses = async (req, res) => {
+    try {
+        const courses = await prisma.course.findMany({
+            include: {
+                userClassCourses: {
+                    select: {
+                        userId: true,
+                        classId: true,
+                    },
+                },
+            },
+        });
+
+        // Formatar o retorno para melhor leitura (opcional)
+        const formattedCourses = courses.map(course => ({
+            courseId: course.courseId,
+            courseName: course.courseName,
+            description: course.description,
+            workload: course.workload,
+            createdAt: course.createdAt,
+            updatedAt: course.updatedAt,
+            associations: course.userClassCourses.map(assoc => ({
+                userId: assoc.userId,
+                classId: assoc.classId,
+            })),
+        }));
+
+        res.json(formattedCourses);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-    
-}
+};
 // Buscar disciplina pelo id 
 
 exports.getCourseById = async(req,res)=>{
