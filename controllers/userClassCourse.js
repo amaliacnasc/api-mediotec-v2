@@ -156,13 +156,14 @@ exports.getRelationshipsGroupedByUser = async (req, res) => {
       return acc;
     }, {});
 
-    res.status(200).json(groupedByUser);
+    // Transformar em array
+    const groupedArray = Object.values(groupedByUser);
+
+    res.status(200).json(groupedArray);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-
 
 exports.getRelationshipsGroupedByCourse = async (req, res) => {
   try {
@@ -191,11 +192,15 @@ exports.getRelationshipsGroupedByCourse = async (req, res) => {
       return acc;
     }, {});
 
-    res.status(200).json(groupedByCourse);
+    // Transformar em array
+    const groupedArray = Object.values(groupedByCourse);
+
+    res.status(200).json(groupedArray);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 exports.getRelationshipsGroupedByClass = async (req, res) => {
@@ -225,10 +230,14 @@ exports.getRelationshipsGroupedByClass = async (req, res) => {
       return acc;
     }, {});
 
-    res.status(200).json(groupedByClass);
+    // Transformar em array
+    const groupedArray = Object.values(groupedByClass);
+
+    res.status(200).json(groupedArray);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
