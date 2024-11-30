@@ -19,16 +19,58 @@ exports.createClass = async(req,res)=>{
     }
 }
 
-// buscar todas as turmas
-// GET
-exports.getAllClasses = async(req,res)=>{
-    try{
-        const turmas = await prisma.class.findMany();
-        res.status(200).json(turmas)
-    }catch(error){
-        res.status(500).json({message:error.message}); 
-    }
-}
+exports.getAllClasses = async (req, res) => {
+  try {
+      const classes = await prisma.class.findMany({
+          include: {
+              userClassCourses: {
+                  include: {
+                      user: {
+                          select: {
+                              userId: true,
+                              role: true,
+                              userName: true,
+                          },
+                      },
+                  },
+              },
+          },
+      });
+
+      // Formatar o retorno para separar os usuários por tipo
+      const formattedClasses = classes.map((classItem) => {
+          const teachers = [];
+          const students = [];
+
+          classItem.userClassCourses.forEach((assoc) => {
+              const { userId, role, userName } = assoc.user;
+
+              if (role === "TEACHER") {
+                  teachers.push({ userId, userName });
+              } else if (role === "STUDENT") {
+                  students.push({ userId, userName });
+              }
+          });
+
+          return {
+              classId: classItem.classId,
+              className: classItem.className,
+              year: classItem.year,
+              createdAt: classItem.createdAt,
+              updatedAt: classItem.updatedAt,
+              associations: {
+                  teachers,
+                  students,
+              },
+          };
+      });
+
+      res.status(200).json(formattedClasses);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+};
+
 
 // Buscar turma pelo id 
 // GET
