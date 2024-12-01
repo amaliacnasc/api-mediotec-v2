@@ -140,3 +140,51 @@ exports.deleteUserById = async(req,res)=>{
         res.status(500).json({ error: error.message });
     }
 }
+
+
+// Buscar todas as disciplinas de um aluno
+exports.getAllCoursesOfStudent = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const courses = await prisma.userClassCourse.findMany({
+            where: { userId },
+            include: {
+                course: true, // Inclui informações do curso
+            },
+        });
+
+        res.status(200).json(courses);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Buscar conceitos de uma disciplina para um aluno
+exports.getConceptsByCourseAndStudent = async (req, res) => {
+    try {
+        const { userId, courseId } = req.params;
+
+        const concepts = await prisma.conceito.findMany({
+            where: {
+                userClassCourse: {
+                    userId,
+                    courseId,
+                },
+            },
+            include: {
+                userClassCourse: {
+                    include: {
+                        user: true,
+                        course: true,
+                    },
+                },
+            },
+        });
+
+        res.status(200).json(concepts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
