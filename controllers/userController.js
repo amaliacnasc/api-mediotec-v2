@@ -188,3 +188,23 @@ exports.getConceptsByCourseAndStudent = async (req, res) => {
     }
 };
 
+// Atualizar conceito de uma unidade
+exports.updateConcept = async (req, res) => {
+    try {
+        const { conceitoId } = req.params;
+        const { conceito, result } = req.body;
+
+        const updatedConcept = await prisma.conceito.update({
+            where: { conceitoId },
+            data: {
+                conceito,
+                result,
+            },
+        });
+
+        res.status(200).json(updatedConcept);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
